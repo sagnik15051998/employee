@@ -7,10 +7,13 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.employee.dto.UpdateDto;
+import com.employee.dto.UpdateResponseDto;
 import com.employee.entity.Employee;
 import com.employee.service.EmployeeService;
 
@@ -34,6 +37,11 @@ public class EmployeeApi {
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<String> deleteEmployee(@PathVariable ("id") Long id) throws Exception {
 		return new ResponseEntity<>(employeeService.deleteEmployee(id), HttpStatus.OK);
+	}
+	
+	@PutMapping("/update")
+	public ResponseEntity<UpdateResponseDto> updateEmployee(@RequestBody UpdateDto updateDto) throws Exception {
+		return new ResponseEntity<>(employeeService.updateEmployee(updateDto), HttpStatus.OK);
 	}
 
 }
