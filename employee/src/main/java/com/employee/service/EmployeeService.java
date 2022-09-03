@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.employee.constants.EmployeeCons;
 import com.employee.dao.EmployeeDao;
+import com.employee.dto.EmployeeDto;
 import com.employee.dto.UpdateDto;
 import com.employee.dto.UpdateResponseDto;
 import com.employee.entity.Employee;
@@ -40,6 +41,24 @@ public class EmployeeService {
 		if(!employeeDao.existsById(id))
 			throw new EmpException(EmployeeCons.NO_EXIST);
 		return employeeDao.findById(id).get();
+	}
+	
+	public List<EmployeeDto> getAllEmployees() throws Exception {
+		Connection conn = DriverManager.getConnection(db_url, db_user, db_pass);
+		Statement st = conn.createStatement();
+		String query = getAllQuery();
+		ResultSet rs = st.executeQuery(query);
+		List<EmployeeDto> list = new ArrayList<>();
+		while(rs.next()) {
+			EmployeeDto dto = new EmployeeDto();
+			dto.setName(rs.getString("name"));
+			dto.setEmailId(rs.getString("email_id"));
+			dto.setSalary(rs.getLong("salary"));
+			dto.setPhoneNumber(rs.getString("phone_number"));
+			dto.setGender(rs.getString("gender"));
+			list.add(dto);
+		}
+		return list;
 	}
 	
 	public String createEmployee(Employee emp) throws Exception {
@@ -94,6 +113,11 @@ public class EmployeeService {
 		queries.add(updateQuery);
 		queries.add(getQuery);
 		return queries;
+	}
+	
+	private String getAllQuery() {
+		String getQuery = "select * from employees";
+		return getQuery;
 	}
 
 }
