@@ -1,21 +1,24 @@
 package com.employee.dto;
 
-public class UpdateResponseDto {
+import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public class EmployeeDto implements Serializable {
 	
-	private Long id;
+	private static final long serialVersionUID = 1L;
+	
+	@JsonProperty("Name")
 	private String name;
+	@JsonProperty("Email")
 	private String emailId;
+	@JsonProperty("Phone")
 	private String phoneNumber;
+	@JsonProperty("Salary")
 	private Long salary;
+	@JsonProperty("Gender")
 	private String gender;
-	private String status;
 	
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
 	public String getName() {
 		return name;
 	}
@@ -46,11 +49,5 @@ public class UpdateResponseDto {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-	public String getStatus() {
-		return status;
-	}
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
+	
 }
